@@ -1,0 +1,173 @@
+[
+  {
+    "id": 1,
+    "title": "Full Stack Web Development",
+    "description": "Master HTML, CSS, JavaScript, React, Node.js, and MongoDB to become a full stack developer.",
+    "price": 4999,
+    "image": "../src/assets/4cde72f0-ff3d-4edd-98ca-780b26472fba.jpg",
+    "rating": 4.8,
+    "category": "Web Development",
+    "enrolled": 3200,
+    "modules": [
+      "Introduction to HTML",
+      "Styling with CSS",
+      "JavaScript Fundamentals",
+      "React Basics",
+      "Node.js Essentials",
+      "MongoDB and Database Management"
+    ],
+    "videoLinks": [
+      "https://www.youtube.com/watch?v=abc123",
+      "https://www.vimeo.com/xyz789",
+      "https://www.dailymotion.com/video/pqr456"
+    ],
+    "reviews": [
+      {
+        "name": "Priya Sharma",
+        "comment": "Excellent course! The hands-on projects really helped me understand full stack development.",
+        "rating": 4.9
+      },
+      {
+        "name": "Amit Patel",
+        "comment": "Great instructors and content, though MongoDB section could use more examples.",
+        "rating": 4.7
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Data Structures & Algorithms",
+    "description": "Understand core computer science concepts and prepare for technical interviews.",
+    "price": 2999,
+    "image": "../src/assets/4d6180df-0927-4659-a87c-d9551bea58e1.jpg",
+    "rating": 4.6,
+    "category": "Computer Science",
+    "enrolled": 2800,
+    "modules": [
+      "Introduction to Data Structures",
+      "Advanced Data Structures",
+      "Algorithm Basics",
+      "Advanced Algorithms",
+      "Interview Preparation"
+    ],
+    "videoLinks": [
+      "https://www.youtube.com/watch?v=def456",
+      "https://www.vimeo.com/uvw123",
+      "https://www.dailymotion.com/video/stu789"
+    ],
+    "reviews": [
+      {
+        "name": "Rahul Verma",
+        "comment": "Very helpful for interview prep, the algorithm section was a game-changer.",
+        "rating": 4.6
+      },
+      {
+        "name": "Sneha Kapoor",
+        "comment": "Good course, but could include more coding challenges.",
+        "rating": 4.5
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "UI/UX Design Bootcamp",
+    "description": "Learn modern design principles and tools like Figma to create stunning interfaces.",
+    "price": 3499,
+    "image": "../src/assets/494bcdbc-9061-453d-b1ff-5639164895d7.jpg",
+    "rating": 4.7,
+    "category": "Design",
+    "enrolled": 1500,
+    "modules": [
+      "Design Fundamentals",
+      "Tools Introduction",
+      "Wireframing and Prototyping",
+      "Usability Testing",
+      "Portfolio Development"
+    ],
+    "videoLinks": [
+      "https://www.youtube.com/watch?v=ghi789",
+      "https://www.vimeo.com/xyz234",
+      "https://www.dailymotion.com/video/mno012"
+    ],
+    "reviews": [
+      {
+        "name": "Anjali Singh",
+        "comment": "Loved the Figma tutorials, highly recommend for beginners!",
+        "rating": 4.8
+      },
+      {
+        "name": "Kunal Desai",
+        "comment": "Great course, but the usability testing part was a bit rushed.",
+        "rating": 4.6
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Python for Beginners",
+    "description": "Start coding with Python, the most beginner-friendly language in tech.",
+    "price": 1999,
+    "image": "../src/assets/bf8499ec-2395-49d5-ae55-4d526ae460eb.jpg",
+    "rating": 4.5,
+    "category": "Programming",
+    "enrolled": 3900,
+    "modules": [
+      "Python Basics",
+      "Control Structures",
+      "Functions and Modules",
+      "Data Structures in Python",
+      "Basic Projects"
+    ],
+    "videoLinks": [
+      "iEkd7bGXP4E",
+      "https://www.vimeo.com/abc567",
+      "https://www.dailymotion.com/video/pqr345"
+    ],
+    "reviews": [
+      {
+        "name": "Neha Gupta",
+        "comment": "Perfect for beginners, the projects were very engaging.",
+        "rating": 4.6
+      },
+      {
+        "name": "Vikram Rao",
+        "comment": "Clear explanations, but more exercises would be better.",
+        "rating": 4.4
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Machine Learning Essentials",
+    "description": "Build and train models using Python libraries like scikit-learn and TensorFlow.",
+    "price": 5999,
+    "image": "../src/assets/494bcdbc-9061-453d-b1ff-5639164895d7.jpg",
+    "rating": 4.9,
+    "category": "AI & ML",
+    "enrolled": 2100,
+    "modules": [
+      "Introduction to Machine Learning",
+      "Python for ML",
+      "Scikit-learn Basics",
+      "TensorFlow Fundamentals",
+      "Model Evaluation"
+    ],
+    "videoLinks": [
+      "https://www.youtube.com/watch?v=mno345",
+      "https://www.vimeo.com/def890",
+      "https://www.dailymotion.com/video/uvw678"
+    ],
+    "reviews": [
+      {
+        "name": "Arjun Mehta",
+        "comment": "In-depth content, TensorFlow section was outstanding!",
+        "rating": 5.0
+      },
+      {
+        "name": "Priyanka Nair",
+        "comment": "Very comprehensive, though the pace was a bit fast.",
+        "rating": 4.8
+      }
+    ]
+  }
+]

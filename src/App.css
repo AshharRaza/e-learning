@@ -1,0 +1,32 @@
+.home-container{
+  background: url('../src/assets/books-5433432_1280.jpg');
+  
+}
+.courses{
+  
+  
+}
+.ul-container{
+  display: grid;
+
+  grid-template-columns: repeat(4,1fr);
+
+ 
+  
+}
+.li-container{
+  margin: 20px;
+  width: 250px;
+  min-height: 300px;
+  box-shadow: 0 2px 2px 2px grey;
+}
+.img img{
+ width: 100%;
+ height: 250px;
+}
+.courses-list{
+  display: flex;
+}
+.lecture-container{
+  display: flex;
+}
