@@ -6,6 +6,7 @@ import { MyCourses } from "./pages/MyCourses"
 import { Contact } from "./pages/Contact"
 import "./App.css"
 import { Lecture } from "./pages/lecture"
+import { Admin } from "./components/Admin"
 
 const App = () => {
 
@@ -34,9 +35,17 @@ const App = () => {
           element:<Lecture/>
 
         }
-      ]
 
-    }
+      ]
+     
+      
+
+    },
+     {
+        path:"/admin",
+      element:<Admin/>
+
+      }
   ])
 
   return <RouterProvider router={router}/>

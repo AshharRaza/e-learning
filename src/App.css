@@ -30,3 +30,27 @@
 .lecture-container{
   display: flex;
 }
+.dashboard{
+  display: flex;
+  
+  color: white;
+  
+ 
+}
+.sidebar {
+  
+
+  width: 15%;
+  /* height: 100vh; */
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+
+
+  
+}
+
+.dashboard-content{
+  width: 85%;
+  
+}
