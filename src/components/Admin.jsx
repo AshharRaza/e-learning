@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import {  NavLink } from "react-router-dom"
 import { Sidebar } from "./Sidebar"
+import { VideoPreview } from "./videoPreview"
 
 export const Admin = () => {
 
   const [course,setCourse] = useState([])
   const [videoPreview, setVideoPreview ] = useState([])
   const [handleUpload, sethandleUpload] = useState(false)
+  const [duration,setDurations] = useState([])
   const [subLecture,setSubLecture] = useState({
     lectureTitle: '',
     lectureDes: '',
@@ -21,20 +23,23 @@ export const Admin = () => {
     const discription = formData.get("description")
     const category = formData.get("category")
     const price = formData.get("price")
+    const img = formData.get("thumbnail")
+    const author = formData.get("author")
     
     // setCourse(video)
-   if (!title || !discription || !category || !videoPreview.length) {
+   if (!title || !discription || !category || !videoPreview.length || !img || !author) {
     alert("Please fill all required fields and upload videos.");
     return;
   }
 
-  const newCourse = { title, discription, category, price, videoPreview, titleDes };
+  const newCourse = { title, discription, category, price, videoPreview, titleDes,img,author };
 
   setCourse(prev => [...prev, newCourse]);
 
   // Optional: reset form
   e.target.reset();
   console.log("Course added:", newCourse);
+  setVideoPreview('')
 
     
 
@@ -44,15 +49,22 @@ export const Admin = () => {
 
     const handleVideo = (e) => {
   const videoFiles = Array.from(e.target.files);
+  
   const previewUrls = videoFiles.map(file => ({
+    
     file,
     url: URL.createObjectURL(file),
   }));
+  
   setVideoPreview(prev => [...prev, ...previewUrls]);// correct state update
-};
+
+  
+    console.log(duration)
 
 
+}
 
+  
 
 const handleUploadLecture = (e) => {
   e.preventDefault()
@@ -88,7 +100,18 @@ const handleSubLectureChange = (e) => {
                     <h1 className="text-3xl m-2">Upload Your New Course</h1>
                    <form  className="bg-white p-6 rounded-lg shadow-lg m-4  max-w-xl  " onSubmit={handleSubmit}>
        
-       
+        <div className="mb-4">
+          <label className="block mb-1 font-semibold">Upload Thumbnail</label>
+          <input
+            type="file"
+            accept="image/*"
+            name="thumbnail"
+          required
+            
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none"
+          />
+        </div>
+
        
         <div className="mb-4">
           <label className="block mb-1 font-semibold">Course Title</label>
@@ -109,6 +132,18 @@ const handleSubLectureChange = (e) => {
             className="w-full border border-gray-300 rounded px-3 py-2 h-24 focus:outline-none"
           ></textarea>
         </div>
+
+         <div className="mb-4">
+          <label className="block mb-1 font-semibold">Author Name</label>
+          <input
+            type="text"
+            name="author"
+          
+            required
+            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none"
+          />
+        </div>
+
         <button
           
           className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded" onClick={handleUploadLecture}
@@ -200,25 +235,7 @@ const handleSubLectureChange = (e) => {
             </div>
 
             <div className="video-uploaded">
-{videoPreview.length > 0 && (
-  <div className="  mt-6">
-    {videoPreview.map((video, index) => (
-      <div key={index} className="bg-gray-600 text-white rounded  flex w-130 m-3">
-        <div className="video text-white">
-        <video src={video.url} controls className=" w-50 h-20 rounded m-2" />
-
-
-        </div>
-        <div className="dis">
-        <h3 className="font-semibold mb-2 text-white">Lecture {index + 1}</h3>
-        
-
-        </div>
-
-      </div>
-    ))}
-  </div>
-)}
+            <VideoPreview videoPreview={videoPreview}/>
             </div>
         </div>
     )
