@@ -1,68 +1,88 @@
 import { useEffect, useState } from "react"
-import {  NavLink } from "react-router-dom"
+import {  NavLink, useNavigate } from "react-router-dom"
 import { Sidebar } from "./Sidebar"
 import { VideoPreview } from "./videoPreview"
+import { UploadVideo } from "./UploadVideo"
+import { toast } from "react-hot-toast"
+
 
 export const Admin = () => {
-
+  const navigate = useNavigate()
   const [course,setCourse] = useState([])
   const [videoPreview, setVideoPreview ] = useState([])
   const [handleUpload, sethandleUpload] = useState(false)
-  const [duration,setDurations] = useState([])
-  const [subLecture,setSubLecture] = useState({
-    lectureTitle: '',
-    lectureDes: '',
-  })
-  const [titleDes,settitleDes] = useState([])
+    const [addFormLecture, setAddFormLecture] = useState()
 
- const handleSubmit = (e) => {
+  const [titleDes,settitleDes] = useState([])
+  
+  
+
+ const handleSubmit = async(e) => {
    e.preventDefault()
     const formData = new FormData(e.target)
+    const thumbnail = formData.get("thumbnail").split("/")[5]
+
 
     const title = formData.get("title")
     const discription = formData.get("description")
     const category = formData.get("category")
     const price = formData.get("price")
-    const img = formData.get("thumbnail")
+    const img = formData.get(`thumbnail`)
+
     const author = formData.get("author")
+   
+    console.log(thumbnail)
+    
     
     // setCourse(video)
-   if (!title || !discription || !category || !videoPreview.length || !img || !author) {
+   if (!thumbnail || !title || !discription || !category || !addFormLecture || !img || !author) {
     alert("Please fill all required fields and upload videos.");
     return;
   }
 
-  const newCourse = { title, discription, category, price, videoPreview, titleDes,img,author };
+  const newCourse = {thumbnail, title, discription, category, price, addFormLecture,author };
 
   setCourse(prev => [...prev, newCourse]);
 
   // Optional: reset form
   e.target.reset();
   console.log("Course added:", newCourse);
+
+try {
+const response =  await fetch("http://localhost:3000/admin",{      //frontend Data Transfer
+
+  method:'POST',
+  headers:{"Content-Type": "application/json"},
+  body: JSON.stringify(newCourse),
+  credentials: "include",
+
+
+  
+}
+
+);
+const data = await response.json();
+console.log(data)
+console.log(response)
+if(data){
+ toast.success(data.error)
+ navigate("/adminlogin")
+}
+
+  
+} catch (error) {
+  console.log(error)
+}
+
   setVideoPreview('')
 
     
 
 
     }
+   
 
 
-    const handleVideo = (e) => {
-  const videoFiles = Array.from(e.target.files);
-  
-  const previewUrls = videoFiles.map(file => ({
-    
-    file,
-    url: URL.createObjectURL(file),
-  }));
-  
-  setVideoPreview(prev => [...prev, ...previewUrls]);// correct state update
-
-  
-    console.log(duration)
-
-
-}
 
   
 
@@ -72,45 +92,32 @@ const handleUploadLecture = (e) => {
 
 }
 
-const handleAddbtn = (e) => {
-  e.preventDefault()
-  sethandleUpload(false)
-  console.log(subLecture.lectureDes, subLecture.lectureTitle)
-  settitleDes((prev) =>[ ...prev, subLecture])
-  console.log(videoPreview)
-
-console.log(titleDes)
- 
+const formLectureData = (data) => {
+  console.log("lecture:", data)
+  setAddFormLecture(data)
 }
 
-const handleSubLectureChange = (e) => {
-  const { name, value } = e.target;
-  setSubLecture(prev => ({
-    ...prev,
-    [name === 'title' ? 'lectureTitle' : 'lectureDes']: value,
-  }));
-};
+
 
 
     return(
         <div className="dashboard ">
-            <Sidebar/>
-            <div className="dashboard-content text-black">
-                <div className="input-container text-black">
-                    <h1 className="text-3xl m-2">Upload Your New Course</h1>
-                   <form  className="bg-white p-6 rounded-lg shadow-lg m-4  max-w-xl  " onSubmit={handleSubmit}>
+          
+            <div className="dashboard-content text-black  justify-center center">
+                <div className="input-container text-black w-250 rounded-2xl m-10 shadow-2xl border-2-gray bg-gray-200  ">
+                    <h1 className="text-3xl m-2 p-4">Upload Your New Course</h1>
+                   <form  className="bg-white p-6 rounded-lg shadow-lg m-4     " onSubmit={handleSubmit}>
        
         <div className="mb-4">
-          <label className="block mb-1 font-semibold">Upload Thumbnail</label>
-          <input
-            type="file"
-            accept="image/*"
-            name="thumbnail"
-          required
-            
-            className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none"
-          />
-        </div>
+  <label className="block mb-1 font-semibold">Thumbnail URL</label>
+  <input
+    type="text"
+    name="thumbnail"
+    placeholder="Enter image URL (e.g., from Google Drive or Imgur)"
+    required
+    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none"
+  />
+</div>
 
        
         <div className="mb-4">
@@ -150,50 +157,11 @@ const handleSubLectureChange = (e) => {
         >
           Upload Lectures
         </button>
-        <div className="lec">
+        <div>
           {
-            handleUpload && <div className="shadow-2xl p-2">
+            handleUpload &&  
+        <UploadVideo AddLecture = {formLectureData} />
 
-              <div className="mb-4">
-          <label className="block mb-1 font-semibold">Upload Video</label>
-          <input
-            type="file"
-            accept="video/*"
-            name="videos"
-            multiple
-            required
-            className="w-full"
-            onChange={handleVideo}
-          />
-        </div>
-              <div className="mb-4">
-          <label className="block mb-1 font-semibold">Lecture Title</label>
-         <input
-  type="text"
-  name="title"
-  value={subLecture.lectureTitle}
-  required
-  className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none"
-  onChange={handleSubLectureChange}
-/>
-        </div>
-
-        <div className="mb-4">
-          <label className="block mb-1 font-semibold">LectureDescription</label>
-         <textarea
-  name="description"
-  value={subLecture.lectureDes}
-  className="w-full border border-gray-300 rounded px-3 py-2 h-24 focus:outline-none"
-  onChange={handleSubLectureChange}
-/>
-        </div>
-         <button
-          
-          className="bg-gray-800 hover:bg-gray-900 text-white px-6 py-2 rounded" onClick={handleAddbtn}
-        >
-          Add Video
-        </button>
-            </div>
           }
         </div>
 
@@ -234,9 +202,7 @@ const handleSubLectureChange = (e) => {
 
             </div>
 
-            <div className="video-uploaded">
-            <VideoPreview videoPreview={videoPreview}/>
-            </div>
+            
         </div>
     )
 }

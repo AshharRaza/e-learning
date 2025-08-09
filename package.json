@@ -7,16 +7,18 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node --env-file=.env --watch server.js"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
-    "drizzle-orm": "^0.44.3",
-    "mysql2": "^3.14.2",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hot-toast": "^2.5.2",
     "react-icons": "^5.5.0",
+    "react-player": "^3.3.1",
     "react-router-dom": "^7.7.0",
+    "react-toastify": "^11.0.5",
     "tailwindcss": "^4.1.11"
   },
   "devDependencies": {

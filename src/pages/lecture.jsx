@@ -1,60 +1,131 @@
 import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
+import { NavLink, useNavigate, useParams } from "react-router-dom"
 import Data from "../Data/data.json"
 import { Loader } from "./Loader"
 import { MdRateReview } from "react-icons/md";
 import { MdOutlineComment } from "react-icons/md";
 import { LuNotebookText } from "react-icons/lu";
+import { CourseLock, CourseModules, fetchBackendData, GetBackComment } from "./fetch";
+import ReactPlayer from "react-player";
+import { ModuleDisplay } from "../components/videoDisplay";
+import { toast } from "react-hot-toast"
+import { Comments } from "../components/Comments";
 
 
 export const Lecture = () => {
 
-    const [data,setData] = useState()
+    const [data,setData] = useState([])
     const params = useParams()
     const [load,setLoad] = useState(true)
-    console.log(params)
+    const [lock,setLock] = useState()
+    const [comment,setComment] = useState()
     
-      useEffect(() => {
+    const id = params.courseId
+
+
+    
+    const [courses,setCourses] = useState([])
+
+    const navigate = useNavigate()
+
+ 
    
+
+    const fetchData = async() => {
+
+
         try {
-             const filterData = Data.find((item) => item.id.toString() === params.id)
-    setData(filterData)
+
+            
+            const purchaseCourse = await CourseLock(id)
+            console.log("purchase",purchaseCourse)
+            setLock(purchaseCourse)
+            const getComments = await GetBackComment()
+            console.log("get",getComments)
+            setComment(getComments)
+            
+
+            const fetchDataBack = await CourseModules(id) 
+           
+            console.log("data",fetchDataBack)
+            
+            const filterData = fetchDataBack.find((item) => item.id.toString() === params.courseId)
+           
+            setData(filterData)
+              
+            setCourses(filterData.videoPreview )
+        
+
+         
+
+            
+            
+            
         } catch (error) {
-            console.log(error)
+            toast.success("Please Login")
+            navigate("/login")
+            
         }
         finally{
             setLoad(false)
+           
         }
-  }, [params.id])
+
+    }
+            console.log("dads",data)
     
-  console.log(data)
+      useEffect(() => {
+   
+    fetchData()
+  }, [])
+    
+  
+
+
+  const paymentPage = () => {
+    navigate(`/courses/${id}/buynow`,{state: {data}})
+  }
+
+  
+
+  const CoursePage = () => {
+    navigate(`/courses/${id}/lecture/:id`)
+
+  }
+
 
     return(
         <>
         <div className="lecture-container ">
             {
                 load ? <Loader/> : <>
-                <div className="video-lecture w-220 h-150 m-4">
-                <iframe
-  width="100%"
+                {
+                    courses.length > 0 && (
+                        <>
+                        <div className="video-lecture w-220 h-190 m-4">
+                { <iframe
+  width="95%"
   height="400"
-  src={`https://www.youtube.com/embed/${data.videoLinks[0]}`}
+  src={`https://drive.google.com/file/d/${courses[0].videoPreview.split("/")[5]}/preview`}
   title="YouTube video"
   frameBorder="0"
   allow="autoplay; encrypted-media"
   allowFullScreen
-></iframe>
+></iframe> 
+
+}
+
 
 <div className="info flex justify-between">
 
 <div>
-    <h1 className="text-3xl">{data.title}</h1>
-            <p className="text-sm text-gray-600">{data.description}</p>
-            <p className="text-purple-500">Rating: {data.rating}</p>
+    <h1 className="text-3xl">{courses[0].title.toUpperCase()}</h1>
+            <p className="text-sm text-gray-600">{courses[0].description}</p>
+           
 
 </div>
 <div className="flex text-center ">
-               <span className="text-3xl m-2 cursor-pointer"> <MdOutlineComment /></span>
+               <span className="text-3xl m-2 cursor-pointer" > <MdOutlineComment /></span>
                 <span  className="text-3xl m-2 cursor-pointer"><LuNotebookText /> </span>
 </div>
             
@@ -63,22 +134,25 @@ export const Lecture = () => {
     
 </div>
 <div className="reviews m-3">
+      
     <div className="head flex">
          <h1 className="text-3xl">Learners Review</h1>
-<MdRateReview className="size-10" />
+
     </div>
+ 
          
 
 <div className="reviews flex ">
     {
        
-        data.reviews.map((curReview) => {
+        comment.map((curReview) => {
 
             return(
-                <div className="w-50 m-2 p-2 bg-purple-300 ">
-                <h2>{curReview.name}</h2>
-                <p>{curReview.comment}</p>
-                <p>Rating: {curReview.rating}</p>
+                <div className="w-50 h-30 m-2 p-2 bg-gray-300 ">
+<MdRateReview className="size-5" />
+
+                <h2>{curReview.text}</h2>
+                
                </div>
             )
         })
@@ -89,32 +163,24 @@ export const Lecture = () => {
 
 
             </div>
-            <div className="lecture-modules bg-purple-200 w-100 rounded-4xl shadow-5xl m-2 ">
-                <p className="text-2xl m-2">Lectures Modules</p>
-            <ul className="m-4">
+            <div className="lecture-modules bg-gray-300 w-100 rounded-4xl shadow-5xl m-2 ">
+               <ModuleDisplay courseId = {id} courses={courses}  courseLock = {lock} data = {data}/>
+
+               <div className="btn">
                 {
-                    data.modules.map((curItem,index) => {
-
-                        return(
-                            <>
-                             <div className="module m-1 p-2 shadow-2xs flex justify-between cursor-pointer" key={index}  >
-                                
-                                <span>{curItem}</span><span>2:50</span>
-                                
-
-                            </div>
-                            
-                            
-                            </>
-                           
-
-                        )
-                        
-                    })
+                    lock ?  <button className="m-4 p-2 w-90 bg-gray-900 text-white cursor-pointer" onClick={CoursePage}>
+                Let's Learn
+                </button> :<button className="m-4 p-2 w-90 bg-gray-900 text-white cursor-pointer" onClick={paymentPage}>
+                Buy Now
+                </button>
                 }
-            </ul>
-            <button className="m-4 p-2 w-90 bg-purple-700 text-white cursor-pointer">Buy Now</button>
+               </div>
+            
                 </div>
+                        </>
+                    )
+                }
+                
                 </>
             
             

@@ -1,5 +1,6 @@
 .home-container{
-  background: url('../src/assets/books-5433432_1280.jpg');
+  /* background: url('../src/assets/learning.png') no-repeat; */
+  
   
 }
 .courses{
@@ -41,6 +42,7 @@
   
 
   width: 15%;
+  color: white;
   /* height: 100vh; */
   display: flex;
   flex-direction: column;

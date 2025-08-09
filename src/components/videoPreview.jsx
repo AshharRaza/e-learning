@@ -13,7 +13,7 @@ export const VideoPreview = ({videoPreview}) => {
     
     const handleDelete = (videoIndex) => {
 
-        console.log(videoUpload)
+        
      
         const handleFilterVideo = videoUpload.filter((curVideo,index) => index !== videoIndex) 
         setVideoUpload(handleFilterVideo)
