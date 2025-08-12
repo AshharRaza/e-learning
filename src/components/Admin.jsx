@@ -11,8 +11,7 @@ export const Admin = () => {
   const [course,setCourse] = useState([])
   const [videoPreview, setVideoPreview ] = useState([])
   const [handleUpload, sethandleUpload] = useState(false)
-    const [addFormLecture, setAddFormLecture] = useState()
-
+  const [addFormLecture, setAddFormLecture] = useState()
   const [titleDes,settitleDes] = useState([])
   
   
@@ -31,7 +30,7 @@ export const Admin = () => {
 
     const author = formData.get("author")
    
-    console.log(thumbnail)
+    
     
     
     // setCourse(video)
@@ -44,42 +43,38 @@ export const Admin = () => {
 
   setCourse(prev => [...prev, newCourse]);
 
-  // Optional: reset form
+  
   e.target.reset();
-  console.log("Course added:", newCourse);
-
-try {
-const response =  await fetch("http://localhost:3000/admin",{      //frontend Data Transfer
-
-  method:'POST',
-  headers:{"Content-Type": "application/json"},
-  body: JSON.stringify(newCourse),
-  credentials: "include",
 
 
-  
-}
+  try {
+  const response =  await fetch("http://localhost:3000/admin",{      //frontend Data Transfer
 
-);
-const data = await response.json();
-console.log(data)
-console.log(response)
-if(data){
- toast.success(data.error)
- navigate("/adminlogin")
-}
+    method:'POST',
+    headers:{"Content-Type": "application/json"},
+    body: JSON.stringify(newCourse),
+    credentials: "include",
 
-  
-} catch (error) {
-  console.log(error)
-}
-
-  setVideoPreview('')
 
     
+  }
 
+  );
+  const data = await response.json();
 
-    }
+  if(data){
+  toast.success(data.error)
+  navigate("/adminlogin")
+  }
+
+  
+  } catch (error) {
+    console.log(error)
+  }
+
+    setVideoPreview('')
+
+  }
    
 
 
@@ -93,30 +88,29 @@ const handleUploadLecture = (e) => {
 }
 
 const formLectureData = (data) => {
-  console.log("lecture:", data)
   setAddFormLecture(data)
 }
 
 
 
 
-    return(
-        <div className="dashboard ">
+return(
+    <div className="dashboard ">
           
-            <div className="dashboard-content text-black  justify-center center">
-                <div className="input-container text-black w-250 rounded-2xl m-10 shadow-2xl border-2-gray bg-gray-200  ">
-                    <h1 className="text-3xl m-2 p-4">Upload Your New Course</h1>
-                   <form  className="bg-white p-6 rounded-lg shadow-lg m-4     " onSubmit={handleSubmit}>
+      <div className="dashboard-content text-black  justify-center center">
+        <div className="input-container text-black w-250 rounded-2xl m-10 shadow-2xl border-2-gray bg-gray-200  ">
+          <h1 className="text-3xl m-2 p-4">Upload Your New Course</h1>
+            <form  className="bg-white p-6 rounded-lg shadow-lg m-4     " onSubmit={handleSubmit}>
        
         <div className="mb-4">
-  <label className="block mb-1 font-semibold">Thumbnail URL</label>
-  <input
-    type="text"
-    name="thumbnail"
-    placeholder="Enter image URL (e.g., from Google Drive or Imgur)"
-    required
-    className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none"
-  />
+        <label className="block mb-1 font-semibold">Thumbnail URL</label>
+        <input
+          type="text"
+          name="thumbnail"
+          placeholder="Enter image URL (e.g., from Google Drive or Imgur)"
+          required
+          className="w-full border border-gray-300 rounded px-3 py-2 focus:outline-none"
+        />
 </div>
 
        

@@ -10,12 +10,14 @@ import { fetchBackendData} from "./fetch";
 import ReactPlayer from "react-player";
 import { ModuleDisplay } from "../components/videoDisplay";
 import { Comments } from "../components/Comments";
+import { Chatbot } from "../components/Chatbot";
 
 
 export const  LecturePage = () => {
 
 const [lectureData, setLectureData] = useState()
 const [completeCourse, setCompleteCourse] = useState()
+const [ai,setAi] = useState(false)
 const [lock,setLock] = useState()
 const params = useParams()
 console.log("ID,",params)
@@ -61,6 +63,10 @@ console.log(params.id)
     const handleCommentBox = () => {
     setComment(!comment)
   }
+
+  const handleAIBtn = () => {
+    setAi(!ai)
+  }
     return(
         <>
           <div className="lecture-container ">
@@ -89,6 +95,15 @@ console.log(params.id)
 
 </div>
 <div className="flex text-center ">
+    <button class="group relative h-10 m-1 inline-flex items-center p-2 font-semibold text-white rounded-full bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 hover:from-blue-600 hover:via-purple-600 hover:to-pink-600 transition-all duration-300 shadow-lg hover:shadow-xl"
+    onClick={handleAIBtn}
+    >
+  <span class="absolute inset-0 rounded-full bg-white/20 blur opacity-0 group-hover:opacity-100 transition-opacity"></span>
+  
+  🤖
+  <span class="relative">AI Doubt Solver</span>
+</button>
+
                <span className="text-3xl m-2 cursor-pointer"> <MdOutlineComment onClick={handleCommentBox} /></span>
                 <span  className="text-3xl m-2 cursor-pointer"><LuNotebookText /> </span>
 </div>
@@ -98,6 +113,9 @@ console.log(params.id)
     
 </div>
 <div className="reviews m-3 ">
+
+    
+
      <div className="commentbox ">
     {
         comment && <Comments />
@@ -109,10 +127,18 @@ console.log(params.id)
 
 
 </div>
-    <div className="lecture-modules bg-gray-300 w-100 rounded-4xl shadow-5xl m-2 ">
+
+{
+    ai ?  <div className="aiBox ">
+    {
+        ai && <Chatbot handleAIBtn = {handleAIBtn}/>
+    }
+</div> : <div className="lecture-modules bg-gray-300 w-100 rounded-4xl shadow-5xl m-2 ">
         <ModuleDisplay courseId = {id} courses={completeCourse} courseLock={true}/>
             
 </div>
+}
+    
 </>
     
 }

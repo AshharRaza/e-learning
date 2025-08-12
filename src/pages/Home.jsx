@@ -11,7 +11,7 @@ export const Home = () => {
         <>
         <div className="home-container h-120 flex  ">
             <div className="w-150">
-                <h1 className="text-4xl text-black m-5 p-2">Unlock Your Potential with Expert-Led Courses</h1>
+                <h1 className="text-4xl text-black m-5 p-2">Unlock Your Potential with Expert-Led Courses + <span className="text-purple-900 ">AI Doubt Solver</span></h1>
 <p className="text-gray text-1xl m-5 ">Join thousands of learners worldwide who are upgrading their skills with high-quality video courses, built by industry experts.</p>
 <button className="bg-gray-900 text-white m-5 p-2 rounded-xl"><NavLink>Explore Courses</NavLink></button>
 

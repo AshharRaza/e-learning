@@ -19,7 +19,7 @@ export const Comments = () => {
             if(res.ok){
                 toast.success("Review Submitted")
             }
-            console.log(res)
+          
             
         } catch (error) {
             console.log(error)
